@@ -1,0 +1,14 @@
+.logo{
+    color: blue;
+}
+
+.searchbar {
+    background-color: #add8e6
+}
+
+.navbar{
+    background-color: wheat;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px;
+}
