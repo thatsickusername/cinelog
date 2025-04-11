@@ -1,11 +1,12 @@
-import Home from "./pages/Home/Home"
+import { Outlet } from "react-router-dom"
+import Layout from "./components/Layout/Layout"
 
 function App() {
 
   return (
-    <>
-      <Home/>
-    </>
+    <Layout> 
+      <Outlet/>
+    </Layout>
   )
 }
 

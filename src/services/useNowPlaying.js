@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-const token = import.meta.env.VITE_tmbdkey;
+const token = import.meta.env.VITE_tmdbKey;
 
 function useNowPlaying(){
-
     const [data, setData] = useState({})
 
     const options = {
         method: 'GET',
-        url: 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1',
+        url: 'https://api.themoviedb.org/3/movie/now_playing',
         headers: {
           accept: 'application/json',
           Authorization: `Bearer ${token}`
@@ -16,18 +15,16 @@ function useNowPlaying(){
     }
 
     const fetchData = async () => {
-      console.log("fetch data")
       axios
       .request(options)
-      .then(res => setData(res))
+      .then(res => setData(res.data))
       .catch(err => console.error(err))
     } 
 
     useEffect(()=>{
       fetchData()
-      console.log("useEffect")
     }, [])
-    console.log(data)
+
     return data
 }
 

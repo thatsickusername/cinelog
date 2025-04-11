@@ -1,0 +1,10 @@
+
+
+.carouselContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.cardImage{
+    width: 150px;
+}
