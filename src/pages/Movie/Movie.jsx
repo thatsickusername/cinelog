@@ -5,8 +5,9 @@ function Movie() {
     const {type, id} = useParams()
 
     return (
-        <div>
+        <div className="moviesContainer">
             <HeaderContainer type={type} id={id}/>
+            <div></div>
         </div>
     );
 }

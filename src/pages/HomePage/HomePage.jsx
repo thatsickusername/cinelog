@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import './HomePage.css'
 import useNowPlaying from '../../services/useNowPlaying';
 import useTrending from '../../services/useTrending';
@@ -12,7 +11,7 @@ function HomePage() {
 
     console.log(NowPlaying)
     return (
-        <div>
+        <div className='homeContainer'>
             <WelcomeHeader/>
             <HorizontalCardsCarousel cardsDetails={NowPlaying.results} carouselHeader="Now Playing"/>
             <HorizontalCardsCarousel cardsDetails={Trending.results} carouselHeader="Trending"/>
