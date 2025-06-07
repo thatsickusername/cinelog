@@ -2,9 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 const token = import.meta.env.VITE_tmdbKey
 
-
 function useImages(type, id){
     const [data, setdata] = useState({})
+    const [isLoading, setLoading] = useState(true)
 
     const options = {
         method: 'GET',
@@ -19,14 +19,15 @@ function useImages(type, id){
         axios
         .request(options)
         .then(res => setdata(res.data))
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(setLoading(false))
     }
       
     useEffect(()=>{
         fetchData()
     },[])
 
-    return data;
+    return {data, isLoading};
 }
 
 export default useImages

@@ -3,8 +3,13 @@ import useImages from "../../services/useImages";
 import './HeaderContainer.css'
 
 function HeaderContainer({type, id}) {
-    const Details = useDetails(type, id) 
-    const Images = useImages(type,id)
+    const {data : Details, isLoading: isDetailsLoading} = useDetails(type, id) 
+    const {data: Images, isLoading: isImagesLoading} = useImages(type,id)
+    console.log(Images)
+
+    const englishLogo = Images.logos?.find(logo => logo.iso_639_1 == "en")
+    const logoPath = englishLogo ? englishLogo.file_path : Images.logos?.[0]?.file_path
+
     ///change image logo logic to iso_639_1: en if not then logo[0]
 
     const backdropUrl = Images.backdrops
@@ -16,7 +21,8 @@ function HeaderContainer({type, id}) {
                 <div className="headerBackdrop" 
                     style={{backgroundImage: `url(${backdropUrl})`                            
                     }}>
-                    <img src={`https://image.tmdb.org/t/p/w500/${Images.logos? Images.logos[0]?.file_path: ""}`}/>
+                    <img src={`https://image.tmdb.org/t/p/w500/${logoPath}`} alt="Logo"/>
+                    {/* <img src={`https://image.tmdb.org/t/p/w500/${Images.logos? Images.logos[0]?.file_path: ""}`}/> */}
                     <div className="TitleSubDetails">
                         <p>{Details.adult ? "R Rated": "PG Rated"}</p>
                         <p>{Details.release_date}</p>

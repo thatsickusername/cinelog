@@ -4,6 +4,7 @@ const token = import.meta.env.VITE_tmdbKey
 
 function useDetails(type, id){
     const [data, setdata] = useState({})
+    const [isLoading, setLoading] = useState(true)
 
     const options = {
         method: 'GET',
@@ -18,14 +19,15 @@ function useDetails(type, id){
         axios
         .request(options)
         .then(res => setdata(res.data))
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(setLoading(false))
     }
       
     useEffect(()=>{
         fetchData()
     },[])
 
-    return data;
+    return {data, isLoading};
 }
 
 export default useDetails

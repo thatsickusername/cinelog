@@ -6,15 +6,23 @@ import HorizontalCardsCarousel from '../../components/HorizontalCardsCarousel/Ho
 
 
 function HomePage() {
-    const NowPlaying = useNowPlaying()
-    const Trending = useTrending()
+    const { data: NowPlaying, isLoading: isNowPlayingLoading } = useNowPlaying();
+    const { data: Trending, isLoading: isTrendingLoading} = useTrending()
 
     console.log(NowPlaying)
     return (
         <div className='homeContainer'>
             <WelcomeHeader/>
-            <HorizontalCardsCarousel cardsDetails={NowPlaying.results} carouselHeader="Now Playing"/>
-            <HorizontalCardsCarousel cardsDetails={Trending.results} carouselHeader="Trending"/>
+            <HorizontalCardsCarousel 
+                cardsDetails={NowPlaying?.results} 
+                carouselHeader="Now Playing"
+                isLoading = {isNowPlayingLoading}
+            />
+            <HorizontalCardsCarousel 
+                cardsDetails={Trending.results} 
+                carouselHeader="Trending"
+                isLoading={isTrendingLoading}
+            />
         </div>
     );
 }

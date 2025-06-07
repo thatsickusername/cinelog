@@ -5,6 +5,7 @@ const token = import.meta.env.VITE_tmdbKey;
 
 function useTrending(){
     const [data, setData] = useState({})
+    const [isLoading, setLoading] = useState(true)
 
     const options = {
         method: 'GET',
@@ -19,14 +20,15 @@ function useTrending(){
         axios
         .request(options)
         .then(res => setData(res.data))
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(setLoading(false))
     }
 
     useEffect(()=>{
         fetchData()
     },[])
     
-    return data
+    return {data, isLoading}
 }
 
 export default useTrending;
