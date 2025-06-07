@@ -1,38 +1,193 @@
+.horizontalCardsCarousel {
+    padding: 1rem 2rem;
+}
 
+.carouselHeader {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
 
-.carouselContainer{
+.carouselContainer {
     display: flex;
-    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 1rem;
+    padding-bottom: 1rem;
 }
 
-.cardImage{
-    width: 150px;
+.carouselContainer::-webkit-scrollbar {
+    display: none;
 }
 
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+}
+
+.cardContainer {
+    position: relative;
+    width: 140px;
+    height: 240px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: transform 0.4s ease;
+}
+
+.cardContainer:hover {
+    border: 2px grey solid;
+}
+
+/* Image Zoom on Hover */
+.cardImageWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.cardImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.cardContainer:hover .cardImage {
+    transform: scale(1.08);
+}
+
+/* Gradient overlay */
+.cardGradientOverlay {
+    position: absolute;
+    bottom: 0;
+    height: 70%;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+    z-index: 2;
+}
+
+/* Text content */
+.cardContent {
+    position: relative;
+    z-index: 3;
+    padding: 0.5rem;
+    color: #fff;
+    text-align: center;
+}
+
+.cardTitle {
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.cardStars {
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
+    color: #ffd700;
+}
+
+.carouselWrapper {
+    position: relative;
+}
+
+.scrollButton {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, 1); /* Shadow for better visibility */
+}
+
+.scrollButton:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow:
+        0 0 8px rgba(255, 204, 0, 0.6),
+        inset 0 0 4px rgba(255, 204, 0, 0.5);
+}
+
+.scrollButton.left {
+    left: -20px;
+}
+
+.scrollButton.right {
+    right: -20px;
+}
+
+.carouselContainer {
+    display: flex;
+    overflow-x: hidden; /* hide scrollbar for better UX */
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    scroll-behavior: smooth;
+}
+
+
+
+/* Skeleton styles */
 .skeleton {
-    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
     background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+    animation: shimmer 1.2s infinite;
     border-radius: 4px;
 }
 
 .skeletonCard {
-    width: 150px;
-    margin-right: 10px;
-}
-
-.skeleton-text {
-    height: 1rem;
-    margin-top: 0.5rem;
-    width: 80%;
+    width: 140px;
+    height: 240px;
+    flex-shrink: 0;
 }
 
 .cardImage.skeleton {
+    height: 100%;
     width: 100%;
-    height: 225px;
+}
+
+.skeleton-text {
+    height: 0.8rem;
+    margin-top: 0.4rem;
+    width: 80%;
 }
 
 @keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.noDataText {
+    color: #999;
+    padding: 1rem;
 }

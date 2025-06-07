@@ -1,9 +1,14 @@
+import './WelcomeHeader.css';
 
 function WelcomeHeader() {
     return (
-        <div>
-            <h1>Welcome to CineLog</h1>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima eos, quo similique voluptatum hic corporis consectetur. Fuga quidem, doloremque blanditiis impedit minus mollitia nulla at maiores, officia reprehenderit consequuntur cum?</p>
+        <div className="welcomeHeader">
+            <div className="welcomeOverlay">
+                <h1 className="welcomeTitle">Welcome to <span>CineLog</span></h1>
+                <p className="welcomeSubtitle">
+                    Dive into the world of cinema — discover what's trending, what's new, and what's unforgettable.
+                </p>
+            </div>
         </div>
     );
 }

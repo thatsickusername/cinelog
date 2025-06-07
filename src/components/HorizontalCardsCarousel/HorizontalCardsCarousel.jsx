@@ -1,38 +1,63 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import './HorizontalCardsCarousel.css'
+import './HorizontalCardsCarousel.css';
 
 function HorizontalCardsCarousel({ cardsDetails, carouselHeader, isLoading }) {
+    const scrollRef = useRef();
+
+    const scroll = (direction) => {
+        const container = scrollRef.current;
+        const scrollAmount = 300; // adjust this for scroll intensity
+
+        if (container) {
+            container.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth',
+            });
+        }
+    };
+
     return (
         <div className="horizontalCardsCarousel">
-            <div className="carouselHeader">
-                {carouselHeader}
-            </div>
+            <h2 className="carouselHeader">{carouselHeader}</h2>
 
-            <div className="carouselContainer">
-                {isLoading ? (
-                    // Skeleton loading cards based on the fixed tiles
-                    Array.from({ length: 6 }).map((_, i) => (
-                        <div key={i} className="cardContainer skeletonCard">
-                            <div className="cardImage skeleton" />
-                            <p className="cardTitle skeleton skeleton-text" />
-                            <div className="cardStars skeleton skeleton-text" />
-                        </div>
-                    ))
-                ) : (
-                    cardsDetails && cardsDetails.length > 0 ? (
-                        cardsDetails.map(Movie => (
-                            <Link key={Movie.id} to={`/movie/${Movie.id}`}>
-                                <div className="cardContainer">
-                                    <img className="cardImage" src={`https://image.tmdb.org/t/p/w300/${Movie.poster_path}`} />
-                                    <p className="cardTitle">{Movie.title}</p>
-                                    <div className="cardStars">{Movie.vote_average}</div>
-                                </div>
-                            </Link>
+            <div className="carouselWrapper">
+                <button className="scrollButton left" onClick={() => scroll('left')}>&lt;</button>
+                <div className="carouselContainer" ref={scrollRef}>
+                    {isLoading ? (
+                        Array.from({ length: 6 }).map((_, i) => (
+                            <div key={i} className="cardContainer skeletonCard">
+                                <div className="cardImage skeleton" />
+                                <p className="cardTitle skeleton skeleton-text" />
+                                <div className="cardStars skeleton skeleton-text" />
+                            </div>
                         ))
                     ) : (
-                        <div className="noDataText">No movies found.</div>
-                    )
-                )}
+                        cardsDetails && cardsDetails.length > 0 ? (
+                            cardsDetails.map(Movie => (
+                                <Link key={Movie.id} to={`/movie/${Movie.id}`} className="cardLink">
+                                    <div className="cardContainer">
+                                        <div className="cardImageWrapper">
+                                            <img
+                                                className="cardImage"
+                                                src={`https://image.tmdb.org/t/p/w300/${Movie.poster_path}`}
+                                                alt={Movie.title}
+                                            />
+                                        </div>
+                                        <div className="cardGradientOverlay"></div>
+                                        <div className="cardContent">
+                                            <p className="cardTitle">{Movie.title}</p>
+                                            <div className="cardStars">⭐ {Movie.vote_average}</div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="noDataText">No movies found.</div>
+                        )
+                    )}
+                </div>
+                <button className="scrollButton right" onClick={() => scroll('right')}>&gt;</button>
             </div>
         </div>
     );

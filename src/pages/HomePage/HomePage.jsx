@@ -19,7 +19,7 @@ function HomePage() {
                 isLoading = {isNowPlayingLoading}
             />
             <HorizontalCardsCarousel 
-                cardsDetails={Trending.results} 
+                cardsDetails={Trending?.results} 
                 carouselHeader="Trending"
                 isLoading={isTrendingLoading}
             />

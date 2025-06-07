@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
-import HeaderContainer from "../../components/HeaderContainer/HeaderContainer";
+import DetailsHeaderContainer from "../../components/DetailsHeaderContainer/DetailsHeaderContainer";
 
 function Movie() {
     const {type, id} = useParams()
 
     return (
         <div className="moviesContainer">
-            <HeaderContainer type={type} id={id}/>
+            <DetailsHeaderContainer type={type} id={id}/>
             <div></div>
         </div>
     );
