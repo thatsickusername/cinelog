@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './HorizontalCardsCarousel.css';
 
-function HorizontalCardsCarousel({ cardsDetails, carouselHeader, isLoading }) {
+function HorizontalCardsCarousel({ cardsDetails, carouselHeader, isLoading, type }) {
     const scrollRef = useRef();
 
     const scroll = (direction) => {
@@ -25,7 +25,7 @@ function HorizontalCardsCarousel({ cardsDetails, carouselHeader, isLoading }) {
                 <button className="scrollButton left" onClick={() => scroll('left')}>&lt;</button>
                 <div className="carouselContainer" ref={scrollRef}>
                     {isLoading ? (
-                        Array.from({ length: 6 }).map((_, i) => (
+                        Array.from({ length: 20 }).map((_, i) => (
                             <div key={i} className="cardContainer skeletonCard">
                                 <div className="cardImage skeleton" />
                                 <p className="cardTitle skeleton skeleton-text" />
@@ -35,7 +35,7 @@ function HorizontalCardsCarousel({ cardsDetails, carouselHeader, isLoading }) {
                     ) : (
                         cardsDetails && cardsDetails.length > 0 ? (
                             cardsDetails.map(Movie => (
-                                <Link key={Movie.id} to={`/movie/${Movie.id}`} className="cardLink">
+                                <Link key={Movie.id} to={`/${type}/${Movie.id}`} className="cardLink">
                                     <div className="cardContainer">
                                         <div className="cardImageWrapper">
                                             <img
@@ -47,7 +47,7 @@ function HorizontalCardsCarousel({ cardsDetails, carouselHeader, isLoading }) {
                                         <div className="cardGradientOverlay"></div>
                                         <div className="cardContent">
                                             <p className="cardTitle">{Movie.title}</p>
-                                            <div className="cardStars">⭐ {Movie.vote_average}</div>
+                                            <div className="cardStars">⭐ {Movie.vote_average?.toFixed(1)}</div>
                                         </div>
                                     </div>
                                 </Link>

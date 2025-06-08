@@ -2,18 +2,18 @@ import useDetails from "../../services/useDetails";
 import useImages from "../../services/useImages";
 import './DetailsHeaderContainer.css'
 
-function HeaderContainer({type, id}) {
+function DetailsHeaderContainer({type, id}) {
     const {data : Details, isLoading: isDetailsLoading} = useDetails(type, id) 
     const {data: Images, isLoading: isImagesLoading} = useImages(type,id)
     console.log(Images)
 
     const englishLogo = Images.logos?.find(logo => logo.iso_639_1 == "en")
-    const logoPath = englishLogo ? englishLogo.file_path : Images.logos?.[0]?.file_path
+    const logoPath = englishLogo?.file_path || Images.logos?.[0]?.file_path || "";
 
     ///change image logo logic to iso_639_1: en if not then logo[0]
 
-    const backdropUrl = Images.backdrops
-        ? `https://image.tmdb.org/t/p/original${Images.backdrops[0].file_path}` 
+    const backdropUrl = Images.backdrops?.[0]
+        ? `https://image.tmdb.org/t/p/original${Images.backdrops[0]?.file_path}` 
         : ""
 
     return (
@@ -54,4 +54,4 @@ function HeaderContainer({type, id}) {
     );
 }
 
-export default HeaderContainer;
+export default DetailsHeaderContainer;

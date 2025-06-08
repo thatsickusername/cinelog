@@ -5,6 +5,7 @@ import App from './App.jsx'
 import HomePage from './pages/HomePage/HomePage.jsx'
 import './main.css'
 import Movie from './pages/Movie/Movie.jsx'
+import SearchResultsPage from './pages/SearchResultsPage/SearchResultsPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: '/:type/:id',
         element: <Movie/>
+      },
+      {
+        path: '/results',
+        element: <SearchResultsPage/>
       }
     ]
   }

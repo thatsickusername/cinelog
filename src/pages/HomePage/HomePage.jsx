@@ -17,11 +17,13 @@ function HomePage() {
                 cardsDetails={NowPlaying?.results} 
                 carouselHeader="Now Playing"
                 isLoading = {isNowPlayingLoading}
+                type="movie"
             />
             <HorizontalCardsCarousel 
                 cardsDetails={Trending?.results} 
                 carouselHeader="Trending"
                 isLoading={isTrendingLoading}
+                type="movie"
             />
         </div>
     );
