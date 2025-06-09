@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage/HomePage.jsx'
 import './main.css'
 import Movie from './pages/Movie/Movie.jsx'
 import SearchResultsPage from './pages/SearchResultsPage/SearchResultsPage.jsx'
+import { AuthProvider } from './context/authProvider.jsx'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <AuthProvider>
+      <RouterProvider router={router}/>
+    </AuthProvider>
   </StrictMode>,
 )
