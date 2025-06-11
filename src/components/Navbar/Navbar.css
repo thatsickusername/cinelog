@@ -7,9 +7,13 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.6);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
+}
+
+.logoLink {
+  text-decoration: none;
 }
 
 .logo {
@@ -27,7 +31,7 @@
 
 .searchbar {
     position: relative;
-    background-color: #292929;
+    background-color: rgba(0, 0, 0, 0.3);
     border: 1px solid #333;
     border-radius: 999px;
     padding: 0.6rem 1rem 0.6rem 2.5rem;
