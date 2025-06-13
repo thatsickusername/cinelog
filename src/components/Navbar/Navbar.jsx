@@ -12,7 +12,6 @@ function Navbar(){
 
     function handleSearch(e){
         e.preventDefault();
-        console.log(searchValue)
         navigate(`/results?search_query=${encodeURIComponent(searchValue)}`)
     }
 

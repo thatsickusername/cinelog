@@ -9,7 +9,6 @@ function HomePage() {
     const { data: NowPlaying, isLoading: isNowPlayingLoading } = useNowPlaying();
     const { data: Trending, isLoading: isTrendingLoading} = useTrending()
 
-    console.log(NowPlaying)
     return (
         <div className='homeContainer'>
             <WelcomeHeader/>

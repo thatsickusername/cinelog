@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import DetailsHeaderContainer from "../../components/DetailsHeaderContainer/DetailsHeaderContainer";
+import CastCarousel from "../../components/CastCarousel/CastCarousel";
 
 function Movie() {
     const {type, id} = useParams()
@@ -7,7 +8,7 @@ function Movie() {
     return (
         <div className="moviesContainer">
             <DetailsHeaderContainer type={type} id={id}/>
-            <div></div>
+            <CastCarousel/>
         </div>
     );
 }

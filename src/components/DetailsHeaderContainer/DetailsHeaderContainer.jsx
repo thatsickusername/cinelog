@@ -5,7 +5,7 @@ import './DetailsHeaderContainer.css'
 function DetailsHeaderContainer({type, id}) {
     const {data : Details, isLoading: isDetailsLoading} = useDetails(type, id) 
     const {data: Images, isLoading: isImagesLoading} = useImages(type,id)
-    console.log(Images)
+
 
     const englishLogo = Images.logos?.find(logo => logo.iso_639_1 == "en")
     const logoPath = englishLogo?.file_path || Images.logos?.[0]?.file_path || "";
@@ -42,10 +42,14 @@ function DetailsHeaderContainer({type, id}) {
                                 <p>{Details.adult ? "R Rated" : "PG Rated"}</p>
                                 <p>{Details.release_date}</p>
                                 <p>{Details.Runtime}</p>
-                                <p>{Details.spoken_languages?.[0]?.english_name}</p>
+                                <p>{Details.original_language}</p>
                             </div>
                             <div className="HeaderDescription">{Details.overview}</div>
-                            <div className="HeaderTags">thriller</div>
+                            <div className="HeaderTagsContianer">
+                                {Details.genres ? Details.genres.map(genre=>{
+                                    return <div key={genre.id} className="HeaderTags">{genre.name}</div>
+                                }): <></>}
+                            </div>
                         </>
                     )}
                 </div>
