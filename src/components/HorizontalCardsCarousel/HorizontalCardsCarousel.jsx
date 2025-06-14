@@ -34,20 +34,20 @@ function HorizontalCardsCarousel({ cardsDetails, carouselHeader, isLoading, type
                         ))
                     ) : (
                         cardsDetails && cardsDetails.length > 0 ? (
-                            cardsDetails.map(Movie => (
-                                <Link key={Movie.id} to={`/${type}/${Movie.id}`} className="cardLink">
+                            cardsDetails.map(Card => (
+                                <Link key={Card.id} to={`/${type}/${Card.id}`} className="cardLink">
                                     <div className="cardContainer">
                                         <div className="cardImageWrapper">
                                             <img
                                                 className="cardImage"
-                                                src={`https://image.tmdb.org/t/p/w300/${Movie.poster_path}`}
-                                                alt={Movie.title}
+                                                src={`https://image.tmdb.org/t/p/w300/${Card.poster_path}`}
+                                                alt={Card.title}
                                             />
                                         </div>
                                         <div className="cardGradientOverlay"></div>
                                         <div className="cardContent">
-                                            <p className="cardTitle">{Movie.title}</p>
-                                            <div className="cardStars">⭐ {Movie.vote_average?.toFixed(1)}</div>
+                                            <p className="cardTitle">{Card.title}</p>
+                                            <div className="cardStars">⭐ {Card.vote_average?.toFixed(1)}</div>
                                         </div>
                                     </div>
                                 </Link>

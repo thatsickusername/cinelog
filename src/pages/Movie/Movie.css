@@ -1,0 +1,17 @@
+.sideBySide {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 40px;
+    flex-wrap: wrap; /* ensures responsiveness on smaller screens */
+  }
+  
+  .main-content {
+    flex: 2;
+    min-width: 300px;
+  }
+  
+  .side-content {
+    flex: 1;
+    min-width: 250px;
+  }
