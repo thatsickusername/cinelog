@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/LoginPage.jsx'
 import './main.css'
 import Movie from './pages/Movie/Movie.jsx'
 import SearchResultsPage from './pages/SearchResultsPage/SearchResultsPage.jsx'
+import ProfilePage from './pages/ProfilePage/ProfilePage.jsx'
 import { AuthProvider } from './context/authProvider.jsx'
 import Protected from './components/Routes/Protected.jsx'
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: '/results',
         element: <SearchResultsPage/>
+      },
+      {
+        path: '/profile/:uid',
+        element: <ProfilePage/>
       }
     ]
   }

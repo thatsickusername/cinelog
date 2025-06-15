@@ -10,6 +10,10 @@ function Navbar(){
     const [searchValue, setSearchValue] = useState("")
     const navigate = useNavigate();
 
+    function handleGoToProfile(){
+        navigate(`/profile/${user?.uid}`)
+    }
+
     function handleSearch(e){
         e.preventDefault();
         navigate(`/results?search_query=${encodeURIComponent(searchValue)}`)
@@ -55,7 +59,7 @@ function Navbar(){
 
                 {dropdownOpen && (
                     <div className='userDropdown'>
-                    <div>Your Profile</div>
+                    <div onClick={handleGoToProfile}>Your Profile</div>
                     <div onClick={handleLogout}>Log Out</div>
                     </div>
                 )}
