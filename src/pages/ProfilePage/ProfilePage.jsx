@@ -6,33 +6,25 @@ import "./ProfilePage.css";
 function ProfilePage() {
 
     const [activeTab, setActiveTab] = useState('watchlist');
-
-    const watchlist=[
-        { id: 1, title: "Inception", posterUrl: "https://..." },
-        { id: 2, title: "The Matrix", posterUrl: "https://..." },
-        { id: 1, title: "Inception", posterUrl: "https://..." },
-        { id: 2, title: "The Matrix", posterUrl: "https://..." },
-        { id: 1, title: "Inception", posterUrl: "https://..." },
-        { id: 2, title: "The Matrix", posterUrl: "https://..." },
-        { id: 1, title: "Inception", posterUrl: "https://..." },
-        { id: 2, title: "The Matrix", posterUrl: "https://..." },
-        { id: 1, title: "Inception", posterUrl: "https://..." },
-        { id: 2, title: "The Matrix", posterUrl: "https://..." }
-      ]
+    const [profile, setProfile] = useState(null)
+    const [watchlist, setWatchlist] = useState([])
     const reviews=[
         { id: 1, movieTitle: "Inception", comment: "A mind-bending masterpiece." },
         { id: 2, movieTitle: "Interstellar", comment: "Loved the visuals!" }
       ]
 
     const {uid} = useParams()
-    const {getUserProfile} = useFirestore()
-    const [profile, setProfile] = useState(null)
+    const {getUserProfile, getUserWatchlist} = useFirestore()
+    
 
     useEffect(()=>{
         (async ()=>{
             try {
-                const data = await getUserProfile(uid)
-                setProfile(data)
+                const userData = await getUserProfile(uid)
+                const watchlistData = await getUserWatchlist(uid)
+                setProfile(userData)
+                setWatchlist(watchlistData)
+
             }
             catch(error){
                 console.log(error)
@@ -40,13 +32,17 @@ function ProfilePage() {
         })()
     },[uid])
 
-    console.log(profile)
+    console.log(profile?.photoURL ? profile.photoURL: null)
 
     return (
         profile ? (
             <div className="profile-container">
                 <div className="profile-header">
-                    <img className="profile-avatar" src={profile.photoURL} alt="User Avatar" />
+                        <img
+                            className="profile-avatar"
+                            src={`https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(profile.displayName || 'User')}`}
+                            alt="User Avatar" 
+                        />
                     <div className="profile-info">
                     <h1>{profile.displayName}</h1>
                     <p>{profile.email}</p>
@@ -76,15 +72,15 @@ function ProfilePage() {
                     <div className="poster-grid">
                         {watchlist.map((movie) => (
                         <div className="poster-card" key={movie.id}>
-                            <img src={movie.posterUrl} alt={movie.title} />
+                            <img src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} alt={movie.title} />
                             <p>{movie.title}</p>
                         </div>
                         ))}
                     </div>
                     ) : (
-                    <div className="review-list">
+                    <div className="profile-review-list">
                         {reviews.map((review) => (
-                        <div className="review-card" key={review.id}>
+                        <div className="profile-review-card" key={review.id}>
                             <h4>{review.movieTitle}</h4>
                             <p>{review.comment}</p>
                         </div>
@@ -94,7 +90,7 @@ function ProfilePage() {
                 </div>
             </div>
         ):(
-            <div>LOADING</div>
+            <div>LOADING...</div>
         )
         
     );

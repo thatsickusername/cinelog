@@ -1,0 +1,139 @@
+.review-section {
+  padding: 2rem;
+  background: black;
+  color: #f0f0f0;
+  border-top: 1px solid #333;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.reviews-list {
+  margin-bottom: 2rem;
+}
+
+.review-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f1f1f1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.8rem;
+}
+
+.review-title h3{
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #ffcc00;
+}
+
+.review-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.review-user {
+  margin-top: 0.2rem;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.review-rating {
+  font-size: 1.2rem;
+  color: #ffc107; /* Yellow-ish stars */
+}
+
+
+.no-reviews {
+  font-style: italic;
+  color: #777;
+}
+
+
+.review-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1.5rem;
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.review-form input,
+.review-form textarea,
+.review-form select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #f1f1f1;
+  font-size: 1rem;
+}
+
+.review-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit-button {
+  align-self: flex-end;
+  padding: 0.6rem 1.2rem;
+  background-color: #1db954;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* .submit-button-disabledSubmit {
+  background-color: grey;
+  cursor: not-allowed;
+  opacity: 0.6;
+} */
+
+/* .submit-button:hover {
+  background-color: #1aa34a;
+}
+
+.submit-button.disabledSubmit:hover {
+  background-color: rgb(87, 87, 87);
+} */
+
+.star-rating {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.star {
+  color: #ccc;
+  transition: color 0.2s ease;
+}
+
+.star.filled {
+  color: #ffc107; /* Gold */
+}
+
+.star:hover {
+  color: #ffca2c;
+}

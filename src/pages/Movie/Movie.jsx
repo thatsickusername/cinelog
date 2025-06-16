@@ -6,9 +6,13 @@ import useImages from "../../services/useImages";
 import useCredits from "../../services/useCredits";
 import ExtraDetails from "../../components/ExtraDetails/ExtraDetails"
 import "./Movie.css"
+import ReviewsSection from "../../components/ReviewsSection/ReviewsSection";
+
+import { useAuth } from '../../context/useAuth'
 
 function Movie() {
     const {type, id} = useParams()
+    const {user} = useAuth()
 
     //fetching of all data
     const {data : details, isLoading: isDetailsLoading} = useDetails(type, id) 
@@ -34,6 +38,7 @@ function Movie() {
                 details={details} 
                 isDetailsLoading={isDetailsLoading}
                 isImagesLoading={isImagesLoading}
+                user={user}
             />
             <div className="sideBySide">
                 <div className="main-content">
@@ -50,6 +55,7 @@ function Movie() {
                 </div>
                 
             </div>
+            <ReviewsSection movieId={id} user={user}/>
         </div>
     );
 }

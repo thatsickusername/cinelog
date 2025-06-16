@@ -2,15 +2,15 @@
 import { useFirestore } from '../../services/firestore'
 import './DetailsHeaderContainer.css'
 
-import { useAuth } from '../../context/useAuth'
+
 import { useState } from 'react'
 import { useEffect } from 'react'
 
 
-function DetailsHeaderContainer({logoPath, backdropUrl,details,isDetailsLoading,isImagesLoading}) {
+function DetailsHeaderContainer({logoPath, backdropUrl,details,isDetailsLoading,isImagesLoading, user}) {
     const [isInWatchlist, setIsInWatchlist] = useState(false)
     const { addToWatchlist, checkIfInWatchList, removeFromWatchlist} = useFirestore()
-    const {user} = useAuth()
+
 
     useEffect(()=>{
         checkIfInWatchList(user?.uid, details?.id?.toString()).then((data=>{
