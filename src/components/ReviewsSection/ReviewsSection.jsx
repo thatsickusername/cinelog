@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useFirestore } from "../../services/firestore";
-
+import { formatDistanceToNow } from 'date-fns';
 import "./ReviewsSection.css"
+import { Link } from "react-router-dom";
 
-function ReviewsSection({movieId, user}) {
+function ReviewsSection({details, movieId, user}) {
 
     const [heading, setHeading] = useState("")
     const [description,setDescription] = useState("")
@@ -15,9 +16,12 @@ function ReviewsSection({movieId, user}) {
     const {checkIfAlreadyReviewed, addReviewToMovie, getMovieReviews} = useFirestore()
 
     useEffect(()=>{
-        checkIfAlreadyReviewed(movieId, user?.uid).then((data=>{
-            setEnableReviewSubmit(data)
-        }))
+        if(movieId && user?.uid){
+            checkIfAlreadyReviewed(movieId, user.uid).then((data=>{
+                setEnableReviewSubmit(data)
+            }))
+        }
+        
     },[movieId, user])
 
     useEffect(()=>{
@@ -37,7 +41,9 @@ function ReviewsSection({movieId, user}) {
             review_title: heading,
             review_description: description,
             review_rating: rating,
-            review_by: user?.displayName
+            review_by: user?.displayName,
+            movie_title: details?.title || details?.name,
+            poster_path: details?.poster_path
         }
 
         console.log(data)
@@ -65,7 +71,12 @@ function ReviewsSection({movieId, user}) {
                     <div className="review-header">
                         <div className="review-title">
                         <h3>{review.review_title}</h3>
-                        <p className="review-user">by {review.review_by}</p>
+                        <Link className="linkStyle" to={`/profile/${review.userId}`}>
+                            <p className="review-user">by {review.review_by}
+                                <span className="review-time"> • {formatDistanceToNow(review.createdAt.seconds * 1000, {addSuffix: true})} </span>
+                            </p>
+                        </Link>
+                       
                         </div>
                         <div className="review-rating">
                             {renderStars(review.review_rating)}

@@ -1,7 +1,9 @@
 import {db} from "./firebase"
-import { collection, addDoc, setDoc, doc, getDoc, deleteDoc, serverTimestamp, getDocs } from 'firebase/firestore'
+import { collection, setDoc, doc, getDoc, deleteDoc, serverTimestamp, getDocs, query, where } from 'firebase/firestore'
 
 export const useFirestore = ()=>{
+
+    // USER COLLECTION
     
     const checkIfInWatchList = async (userId, dataId) =>{
         const docRef = doc(db, "users", userId?.toString(), "watchlist", dataId?.toString())
@@ -78,31 +80,49 @@ export const useFirestore = ()=>{
         }
     }
 
+
+
+    // REVIEW COLLECTION
+
+    const getReviewDocId = (movieId, userId) => `${movieId}_${userId}`
+
     const checkIfAlreadyReviewed = async (movieId, userId) =>{
-        const docRef = doc(db, "movies", movieId?.toString(), "reviews", userId?.toString())
+        const docId = getReviewDocId(movieId, userId);
+        const docRef = doc(db, "reviews", docId)
         const docSnap = await getDoc(docRef)
-        if(docSnap.exists()) return true
-        else return false
+        return docSnap.exists()
     }
 
 
     const addReviewToMovie = async (movieId, userId, data) =>{
         try{
+
+            const docId = getReviewDocId(movieId, userId)
+
             if (await checkIfAlreadyReviewed(movieId, userId)){
                 console.log("Movie already Reviewed")
                 return false
             }
-            await setDoc(doc(db,"movies", movieId, "reviews", userId), data)
-            console.log("Document written")
+
+            const reviewData = {
+                ...data,
+                movieId,
+                userId,
+                createdAt: serverTimestamp(),
+              };
+
+           await setDoc(doc(db, "reviews", docId), reviewData)
+            console.log("Review added")
         }catch{
-            console.log(error, 'Error adding doccument')
+            console.log(error, 'Error adding Review')
         }
     }
 
     const getMovieReviews = async(movieId) => {
         try{
-            const reviewsRef = collection(db, "movies", movieId, "reviews")
-            const snap = await getDocs(reviewsRef);
+            const reviewsRef = collection(db, "reviews")
+            const q = query(reviewsRef, where("movieId", "==", movieId))
+            const snap = await getDocs(q);
 
             const reviewList = snap.docs.map(doc =>({
                 id: doc.id,
@@ -110,12 +130,31 @@ export const useFirestore = ()=>{
             }))
             return reviewList;
         }catch(error){
-            console.log(error)
+            console.log("Error getting movie reviews", error);
+            return[]
+        }
+    }
+
+    const getUserReviews = async(userId) =>{
+        try {
+            const reviewRef = collection(db, "reviews")
+            const q = query(reviewRef, where("userId", "==", userId))
+            const snap = await getDocs(q)
+
+            const reviewList = snap.docs.map((doc)=>({
+                id: doc.id,
+                ...doc.data(),
+            }))
+
+            return reviewList
+        } catch (error) {
+            console.log("Error getting user reviews", error);
+            return[]
         }
     }
 
     return {
-        addToWatchlist, checkIfInWatchList, removeFromWatchlist, checkIfInUser, getUserProfile, getUserWatchlist, checkIfAlreadyReviewed, addReviewToMovie, getMovieReviews
+        addToWatchlist, checkIfInWatchList, removeFromWatchlist, checkIfInUser, getUserProfile, getUserWatchlist, checkIfAlreadyReviewed, addReviewToMovie, getMovieReviews, getUserReviews
     }
 }
 

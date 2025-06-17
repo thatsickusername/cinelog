@@ -13,9 +13,10 @@ function DetailsHeaderContainer({logoPath, backdropUrl,details,isDetailsLoading,
 
 
     useEffect(()=>{
-        checkIfInWatchList(user?.uid, details?.id?.toString()).then((data=>{
-            setIsInWatchlist(data)
-        }))
+        if (user?.uid && details?.id) {
+            checkIfInWatchList(user.uid, details.id?.toString()).then((data=>{
+                setIsInWatchlist(data)
+        }))}
     },[details, user])
 
     const handleRemoveFromWatchlist = async ()=>{

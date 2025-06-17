@@ -18,7 +18,6 @@ function Movie() {
     const {data : details, isLoading: isDetailsLoading} = useDetails(type, id) 
     const {data: images, isLoading: isImagesLoading} = useImages(type,id)
     const {data: credits, isLoading: isCreditsLoading} = useCredits(id)
-    console.log(details)
 
     //calcuation over data
     const englishLogo = images.logos?.find(logo => logo.iso_639_1 == "en")
@@ -55,7 +54,7 @@ function Movie() {
                 </div>
                 
             </div>
-            <ReviewsSection movieId={id} user={user}/>
+            <ReviewsSection details={details} movieId={id} user={user}/>
         </div>
     );
 }

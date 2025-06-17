@@ -38,7 +38,7 @@ function Navbar(){
 
     return(
         <div className='navbar'>
-            <Link className="logoLink" to='/'>
+            <Link className="linkStyle" to='/'>
                 <h1 className='logo'>CineLog</h1>
             </Link>
             <form onSubmit={handleSearch}> 

@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useFirestore } from '../../services/firestore';
 import "./ProfilePage.css";
+import { formatDistanceToNow } from 'date-fns';
 
 function ProfilePage() {
 
     const [activeTab, setActiveTab] = useState('watchlist');
     const [profile, setProfile] = useState(null)
     const [watchlist, setWatchlist] = useState([])
-    const reviews=[
-        { id: 1, movieTitle: "Inception", comment: "A mind-bending masterpiece." },
-        { id: 2, movieTitle: "Interstellar", comment: "Loved the visuals!" }
-      ]
+    const [reviewList, setReviewList] = useState([])
 
     const {uid} = useParams()
-    const {getUserProfile, getUserWatchlist} = useFirestore()
+    const {getUserProfile, getUserWatchlist, getUserReviews} = useFirestore()
     
 
     useEffect(()=>{
@@ -22,9 +20,10 @@ function ProfilePage() {
             try {
                 const userData = await getUserProfile(uid)
                 const watchlistData = await getUserWatchlist(uid)
+                const reviewData = await getUserReviews(uid)
                 setProfile(userData)
                 setWatchlist(watchlistData)
-
+                setReviewList(reviewData)
             }
             catch(error){
                 console.log(error)
@@ -32,7 +31,11 @@ function ProfilePage() {
         })()
     },[uid])
 
-    console.log(profile?.photoURL ? profile.photoURL: null)
+    const renderStars = (rating) => {
+        const fullStars = '★'.repeat(Math.floor(rating));
+        const emptyStars = '☆'.repeat(5 - Math.floor(rating));
+        return fullStars + emptyStars;
+      };
 
     return (
         profile ? (
@@ -71,19 +74,46 @@ function ProfilePage() {
                     {activeTab === 'watchlist' ? (
                     <div className="poster-grid">
                         {watchlist.map((movie) => (
-                        <div className="poster-card" key={movie.id}>
-                            <img src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} alt={movie.title} />
-                            <p>{movie.title}</p>
-                        </div>
+                        <Link className="linkStyle" to={`/movies/${movie.id}`}>
+                            <div className="poster-card" key={movie.id}>
+                                <img src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} alt={movie.title} />
+                                <p>{movie.title}</p>
+                            </div>
+                        </Link>
+                        
                         ))}
                     </div>
                     ) : (
                     <div className="profile-review-list">
-                        {reviews.map((review) => (
-                        <div className="profile-review-card" key={review.id}>
-                            <h4>{review.movieTitle}</h4>
-                            <p>{review.comment}</p>
-                        </div>
+                        {reviewList.map((review) => (
+                                <div className="profile-review-card" key={review.id}>
+                                    <Link className="linkStyle" key={review.movieId} to={`/movie/${review.movieId}`}>
+                                        <div className="cardContainer">
+                                            <div className="cardImageWrapper">
+                                                <img className="cardImage" src={`https://image.tmdb.org/t/p/w300/${review.poster_path}`} alt={review.movie_title} />
+                                            </div>
+                                            <div className="cardGradientOverlay"></div>
+                                            <div className="cardContent">
+                                                <h4 className="cardTitle">{review.movie_title}</h4>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                
+                                    <div className="profile-review-content">
+                                    <div className="review-header">
+                                        <div className="review-title">
+                                        <h3>{review.review_title}</h3>
+                                        <p className="review-user">by {review.review_by}
+                                            <span className="review-time"> • {formatDistanceToNow(review.createdAt.seconds * 1000, {addSuffix: true})} </span>
+                                        </p>
+                                        </div>
+                                        <div className="review-rating">
+                                        {renderStars(review.review_rating)}
+                                        </div>
+                                    </div>
+                                    <p className="review-description">{review.review_description}</p>
+                                    </div>
+                            </div>
                         ))}
                     </div>
                     )}
