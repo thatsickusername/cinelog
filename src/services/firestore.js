@@ -113,8 +113,10 @@ export const useFirestore = ()=>{
 
            await setDoc(doc(db, "reviews", docId), reviewData)
             console.log("Review added")
+            return true
         }catch{
             console.log(error, 'Error adding Review')
+            return false
         }
     }
 

@@ -10,19 +10,26 @@ function ReviewsSection({details, movieId, user}) {
     const [description,setDescription] = useState("")
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
-    const [enableReviewSubmit, setEnableReviewSubmit] = useState(false)
+    const [isFormValid, setIsFormValid] = useState(false)
+    const [isAlreadyReviewed, setIsAlreadyReviewed] = useState(false)
     const [movieReviews, setMovieReviews] = useState([])
+    const [reviewSubmitStatus, setReviewSubmitStatus] = useState(false)
 
     const {checkIfAlreadyReviewed, addReviewToMovie, getMovieReviews} = useFirestore()
 
     useEffect(()=>{
+        if(heading && description && rating) setIsFormValid(true)
+        else setIsFormValid(false)
+    },[heading,description,rating])
+
+    useEffect(()=>{
         if(movieId && user?.uid){
             checkIfAlreadyReviewed(movieId, user.uid).then((data=>{
-                setEnableReviewSubmit(data)
+                setIsAlreadyReviewed(data)
             }))
         }
         
-    },[movieId, user])
+    },[movieId, user, reviewSubmitStatus])
 
     useEffect(()=>{
         (async ()=>{
@@ -34,7 +41,7 @@ function ReviewsSection({details, movieId, user}) {
                 console.log(error)
             }
         })()
-    },[movieId])
+    },[movieId, reviewSubmitStatus])
 
     const handleReviewSubmit = async () =>{
         const data = {
@@ -47,9 +54,13 @@ function ReviewsSection({details, movieId, user}) {
         }
 
         console.log(data)
-        await addReviewToMovie(movieId, user?.uid, data )
-        const isAlreadyReviewed = await checkIfAlreadyReviewed(movieId, user?.uid)
-        setEnableReviewSubmit(!isAlreadyReviewed)
+        const reviewStatus = await addReviewToMovie(movieId, user?.uid, data )
+        // const reviewPublished = await checkIfAlreadyReviewed(movieId, user?.uid)
+        // setIsAlreadyReviewed(reviewPublished)
+        setHeading("")
+        setDescription("")
+        setRating(0)
+        setReviewSubmitStatus(reviewStatus)
     }
 
     const renderStars = (rating) => {
@@ -113,7 +124,11 @@ function ReviewsSection({details, movieId, user}) {
                         </span>
                     ))}
                 </div>
-                <button className="submit-button" onClick={handleReviewSubmit}>Submit Review</button>
+                <button 
+                    className={isFormValid && !isAlreadyReviewed ? "submit-button" : "submit-button-disabled"}
+                    onClick={handleReviewSubmit}
+                    disabled={!isFormValid && isAlreadyReviewed}
+                >Submit Review</button>
             </div>
         </div>
 

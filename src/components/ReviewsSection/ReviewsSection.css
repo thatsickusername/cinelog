@@ -89,6 +89,7 @@
 .review-form textarea {
   resize: vertical;
   min-height: 100px;
+  height: fit-content;
 }
 
 .submit-button {
@@ -103,19 +104,22 @@
   transition: background-color 0.3s ease;
 }
 
-/* .submit-button-disabledSubmit {
-  background-color: grey;
-  cursor: not-allowed;
-  opacity: 0.6;
-} */
-
-/* .submit-button:hover {
+.submit-button:hover {
   background-color: #1aa34a;
 }
 
-.submit-button.disabledSubmit:hover {
-  background-color: rgb(87, 87, 87);
-} */
+
+.submit-button-disabled {
+  align-self: flex-end;
+  padding: 0.6rem 1.2rem;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: not-allowed;
+  transition: background-color 0.3s ease;
+  background-color: grey;
+}
 
 .star-rating {
   display: flex;
