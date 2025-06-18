@@ -87,8 +87,12 @@
     
   .profile-tabs {
     display: flex;
-    border-bottom: 1px solid #ccc;
+    margin: auto;
+    width: fit-content;
     margin-bottom: 16px;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 30px;
   }
   
   .profile-tabs button {
@@ -97,12 +101,13 @@
     padding: 12px 20px;
     cursor: pointer;
     font-size: 16px;
-    color: #555;
+    color: white;
   }
   
   .profile-tabs .active-tab {
-    border-bottom: 3px solid #007bff;
-    color: #007bff;
+    background-color: #ffcc00;
+    color: black;
+    border-radius: 20px;
     font-weight: bold;
   }
   
@@ -175,5 +180,14 @@
   .profile-review-content {
     flex: 1;
   }
+
+
+.NoDataNotification{
+  width: 100%;
+  text-align: center;
+  margin-top: 2rem;
+  font-style: italic;
+  color: #777;
+}
   
   

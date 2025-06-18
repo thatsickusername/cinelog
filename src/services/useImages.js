@@ -25,7 +25,7 @@ function useImages(type, id){
       
     useEffect(()=>{
         fetchData()
-    },[])
+    },[type,id])
 
     return {data, isLoading};
 }

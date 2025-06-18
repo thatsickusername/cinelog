@@ -3,6 +3,7 @@ import useSearchMovies from '../../services/useSearchMovies';
 import useSearchTV from '../../services/useSearchTV';
 import { useSearchParams } from 'react-router-dom';
 import HorizontalCardsCarousel from '../../components/HorizontalCardsCarousel/HorizontalCardsCarousel';
+import './SearchResultsPage.css'
 
 
 function SearchResultsPage(props) {
@@ -13,20 +14,23 @@ function SearchResultsPage(props) {
     const {data: SearchResultTV, isLoading: isSearchResultTVLoading} = useSearchTV(search_query)
 
     return (
-        <div>
-            Search Results
+        <div className='SearchResultsContainer'>
             <HorizontalCardsCarousel
                 cardsDetails={SearchResultMovies?.results}
                 carouselHeader="Search Results for Movies"
                 isLoading={isSearchResultMoviesLoading}
                 type="movie"
             />
-            <HorizontalCardsCarousel
+            {/* <HorizontalCardsCarousel
                 cardsDetails={SearchResultTV?.results}
                 carouselHeader="Search Results for TV Shows"
                 isLoading={isSearchResultTVLoading}
                 type="tv"
-            />
+            /> */}
+            <div className="horizontalCardsCarousel">
+                <h2 className="carouselHeader">Search Results for TV Shows coming soon</h2>
+            </div>
+
         </div>
         
     );

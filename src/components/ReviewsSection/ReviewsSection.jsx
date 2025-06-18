@@ -79,21 +79,21 @@ function ReviewsSection({details, movieId, user}) {
                 ) : (
                 movieReviews.map((review) => (
                     <div className="review-card" key={review.id}>
-                    <div className="review-header">
-                        <div className="review-title">
-                        <h3>{review.review_title}</h3>
-                        <Link className="linkStyle" to={`/profile/${review.userId}`}>
-                            <p className="review-user">by {review.review_by}
-                                <span className="review-time"> • {formatDistanceToNow(review.createdAt.seconds * 1000, {addSuffix: true})} </span>
-                            </p>
-                        </Link>
-                       
+                        <div className="review-header">
+                            <div className="review-title">
+                            <h3>{review.review_title}</h3>
+                            <Link className="linkStyle" to={`/profile/${review.userId}`}>
+                                <p className="review-user">by {review.review_by}
+                                    <span className="review-time"> • {formatDistanceToNow(review.createdAt.seconds * 1000, {addSuffix: true})} </span>
+                                </p>
+                            </Link>
+                        
+                            </div>
+                            <div className="review-rating">
+                                {renderStars(review.review_rating)}
+                            </div>
                         </div>
-                        <div className="review-rating">
-                            {renderStars(review.review_rating)}
-                        </div>
-                    </div>
-                    <p className="review-description">{review.review_description}</p>
+                        <p className="review-description">{review.review_description}</p>
                     </div>
                 ))
                 )}

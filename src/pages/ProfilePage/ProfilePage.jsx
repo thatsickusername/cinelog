@@ -69,53 +69,62 @@ function ProfilePage() {
                     </button>
                 </div>
 
+                    
+
                 {/* Content */}
                 <div className="profile-content">
                     {activeTab === 'watchlist' ? (
-                    <div className="poster-grid">
-                        {watchlist.map((movie) => (
-                        <Link className="linkStyle" to={`/movies/${movie.id}`}>
-                            <div className="poster-card" key={movie.id}>
-                                <img src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} alt={movie.title} />
-                                <p>{movie.title}</p>
-                            </div>
-                        </Link>
-                        
-                        ))}
-                    </div>
-                    ) : (
-                    <div className="profile-review-list">
-                        {reviewList.map((review) => (
-                                <div className="profile-review-card" key={review.id}>
-                                    <Link className="linkStyle" key={review.movieId} to={`/movie/${review.movieId}`}>
-                                        <div className="cardContainer">
-                                            <div className="cardImageWrapper">
-                                                <img className="cardImage" src={`https://image.tmdb.org/t/p/w300/${review.poster_path}`} alt={review.movie_title} />
-                                            </div>
-                                            <div className="cardGradientOverlay"></div>
-                                            <div className="cardContent">
-                                                <h4 className="cardTitle">{review.movie_title}</h4>
-                                            </div>
-                                        </div>
-                                    </Link>
+                        watchlist.length === 0 ? 
+                            <div className='NoDataNotification'> Your watchlist is empty.<br/>start adding movies to keep track of what you want to watch!</div>
+                            :
+                            <div className="poster-grid">
+                                {watchlist.map((movie) => (
+                                <Link className="linkStyle" to={`/movie/${movie.id}`}>
+                                    <div className="poster-card" key={movie.id}>
+                                        <img src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} alt={movie.title} />
+                                        <p>{movie.title}</p>
+                                    </div>
+                                </Link>
                                 
-                                    <div className="profile-review-content">
-                                    <div className="review-header">
-                                        <div className="review-title">
-                                        <h3>{review.review_title}</h3>
-                                        <p className="review-user">by {review.review_by}
-                                            <span className="review-time"> • {formatDistanceToNow(review.createdAt.seconds * 1000, {addSuffix: true})} </span>
-                                        </p>
-                                        </div>
-                                        <div className="review-rating">
-                                        {renderStars(review.review_rating)}
-                                        </div>
-                                    </div>
-                                    <p className="review-description">{review.review_description}</p>
-                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
+                    )  : (
+                
+                        reviewList.length === 0 ? 
+                            <div className='NoDataNotification'> You’ve been quiet...<br/> Share your thoughts and rate what you've watched!</div>
+                            :
+                            <div className="profile-review-list">
+                                {reviewList.map((review) => (
+                                        <div className="profile-review-card" key={review.id}>
+                                            <Link className="linkStyle" key={review.movieId} to={`/movie/${review.movieId}`}>
+                                                <div className="cardContainer">
+                                                    <div className="cardImageWrapper">
+                                                        <img className="cardImage" src={`https://image.tmdb.org/t/p/w300/${review.poster_path}`} alt={review.movie_title} />
+                                                    </div>
+                                                    <div className="cardGradientOverlay"></div>
+                                                    <div className="cardContent">
+                                                        <h4 className="cardTitle">{review.movie_title}</h4>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        
+                                            <div className="profile-review-content">
+                                            <div className="review-header">
+                                                <div className="review-title">
+                                                <h3>{review.review_title}</h3>
+                                                <p className="review-user">by {review.review_by}
+                                                    <span className="review-time"> • {formatDistanceToNow(review.createdAt.seconds * 1000, {addSuffix: true})} </span>
+                                                </p>
+                                                </div>
+                                                <div className="review-rating">
+                                                {renderStars(review.review_rating)}
+                                                </div>
+                                            </div>
+                                            <p className="review-description">{review.review_description}</p>
+                                            </div>
+                                    </div>
+                                ))}
+                            </div>
                     )}
                 </div>
             </div>

@@ -25,7 +25,7 @@ function useCredits (id) {
 
     useEffect(()=>{
         fetchData()
-    },[])
+    },[id])
     
     return {data, isLoading}
 }

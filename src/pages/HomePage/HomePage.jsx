@@ -1,13 +1,16 @@
 import './HomePage.css'
 import useNowPlaying from '../../services/useNowPlaying';
-import useTrending from '../../services/useTrending';
+import useTopRatedMovies from '../../services/useTopRatedMovies';
+import useUpcomingMovies from '../../services/useUpcomingMovies';
 import WelcomeHeader from '../../components/WelcomeHeader/WelcomeHeader';
 import HorizontalCardsCarousel from '../../components/HorizontalCardsCarousel/HorizontalCardsCarousel';
 
 
 function HomePage() {
     const { data: NowPlaying, isLoading: isNowPlayingLoading } = useNowPlaying();
-    const { data: Trending, isLoading: isTrendingLoading} = useTrending()
+    const { data: TopRated, isLoading: isTopRatedLoading} = useTopRatedMovies()
+    const { data: Upcoming, isLoading: isUpcomingLoading} = useUpcomingMovies()
+
 
     return (
         <div className='homeContainer'>
@@ -19,9 +22,15 @@ function HomePage() {
                 type="movie"
             />
             <HorizontalCardsCarousel 
-                cardsDetails={Trending?.results} 
-                carouselHeader="Trending"
-                isLoading={isTrendingLoading}
+                cardsDetails={TopRated?.results} 
+                carouselHeader="Top Rated Movies"
+                isLoading = {isTopRatedLoading}
+                type="movie"
+            />
+            <HorizontalCardsCarousel 
+                cardsDetails={Upcoming?.results} 
+                carouselHeader="Upcoming Movies"
+                isLoading = {isUpcomingLoading}
                 type="movie"
             />
         </div>
