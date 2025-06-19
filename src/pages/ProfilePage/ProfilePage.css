@@ -28,6 +28,7 @@
   .profile-info h1 {
     margin: 0;
     font-size: 2rem;
+
   }
   
   .profile-info p {
@@ -190,4 +191,27 @@
   color: #777;
 }
   
+@media screen and (max-width: 480px){
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1.5rem;
+  }
   
+  .profile-info h1 {
+    margin: 0;
+    font-size: 1.5rem;
+
+  }
+  
+  .profile-info p {
+    color: #ccc;
+    font-size: 0.8rem;
+  } 
+
+  .review-header{
+    flex-direction: column;
+  }
+}

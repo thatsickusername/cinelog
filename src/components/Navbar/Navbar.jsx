@@ -9,12 +9,14 @@ function Navbar(){
 
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [searchValue, setSearchValue] = useState("")
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const navigate = useNavigate();
     const dropdownRef = useRef(null); // Ref for the dropdown container
+    const mobileMenuRef = useRef(null); // Ref for the mobile menu
 
     function handleGoToProfile(){
         navigate(`/profile/${user?.uid}`)
-        setDropdownOpen(false); // Close dropdown after navigation
+        toggleMobileMenu()
     }
 
     function handleSearch(e){
@@ -39,6 +41,24 @@ function Navbar(){
         setDropdownOpen(prevState => !prevState)
     }
 
+    // Toggle mobile menu
+    function toggleMobileMenu() {
+        setMobileMenuOpen(prevState => !prevState);
+        // When opening mobile menu, ensure body doesn't scroll
+        if (!mobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    // Close mobile menu when navigating
+    function handleMobileNavigation(path) {
+        navigate(path);
+        setMobileMenuOpen(false);
+        document.body.style.overflow = 'auto';
+    }
+
     // Effect to handle clicks outside the dropdown
     useEffect(() => {
         function handleClickOutside(event) {
@@ -58,42 +78,100 @@ function Navbar(){
         };
     }, [dropdownOpen]);
 
+    // Effect to handle escape key for mobile menu
+    useEffect(() => {
+        function handleEscKey(event) {
+            if (event.key === 'Escape' && mobileMenuOpen) {
+                setMobileMenuOpen(false);
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        if (mobileMenuOpen) {
+            document.addEventListener('keydown', handleEscKey);
+        }
+
+        return () => {
+            document.removeEventListener('keydown', handleEscKey);
+        };
+    }, [mobileMenuOpen]);
+
     return(
-        <div className='navbar'>
-            <Link className="linkStyle" to='/'>
-                <h1 className='logo'>CineLog</h1>
-            </Link>
-            <form onSubmit={handleSearch}> 
-                <input  className='searchbar' 
-                        placeholder="Search movies, tv shows..." 
-                        value={searchValue} 
-                        type='text' 
-                        onChange={(e)=> setSearchValue(e.target.value)}>
-                </input>
-            </form>
-            <div className='userLinks' ref={dropdownRef}> {/* Attach ref here */}
-                {user && (
-                    <div className='userButton' onClick={handleDropdownToggle}>
-                    {user?.displayName}
-                    <span className={`dropdownArrow ${dropdownOpen ? 'open' : ''}`}>▼</span>
-                    </div>
-                )}
+        <>
+            <div className='navbar'>
+                <Link className="linkStyle" to='/' onClick={() => handleMobileNavigation('/')}>
+                    <h1 className='logo'>CineLog</h1>
+                </Link>
+                <form onSubmit={handleSearch}> 
+                    <input  className='searchbar' 
+                            placeholder="Search movies, tv shows..." 
+                            value={searchValue} 
+                            type='text' 
+                            onChange={(e)=> setSearchValue(e.target.value)}>
+                    </input>
+                </form>
+                <div className='userLinks' ref={dropdownRef}> {/* Attach ref here */}
+                    {user && (
+                        <div className='userButton' onClick={handleDropdownToggle}>
+                        {user?.displayName}
+                        <span className={`dropdownArrow ${dropdownOpen ? 'open' : ''}`}>▼</span>
+                        </div>
+                    )}
 
-                {dropdownOpen && (
-                    <div className='userDropdown'>
-                    <div onClick={handleGoToProfile}>Your Profile</div>
-                    <div onClick={handleLogout}>Log Out</div>
-                    </div>
-                )}
+                    {dropdownOpen && (
+                        <div className='userDropdown'>
+                        <div onClick={handleGoToProfile}>Your Profile</div>
+                        <div onClick={handleLogout}>Log Out</div>
+                        </div>
+                    )}
 
-                {!user && (
-                    <div className='userButton' onClick={handleGoogleLogin}>
-                    Log In
-                    </div>
-                )}
+                    {!user && (
+                        <div className='userButton' onClick={handleGoogleLogin}>
+                        Log In
+                        </div>
+                    )}
+                </div>
+
+                {/* Mobile menu button (hamburger) */}
+                <button 
+                    className={`mobile-menu-button ${mobileMenuOpen ? 'open' : ''}`} 
+                    onClick={toggleMobileMenu}
+                    aria-label="Toggle mobile menu"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
 
-        </div>
+            {/* Mobile Menu */}
+            <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`} ref={mobileMenuRef}>
+                <form onSubmit={(e) => {
+                    handleSearch(e);
+                    setMobileMenuOpen(false);
+                    document.body.style.overflow = 'auto';
+                }}> 
+                    <input  className='searchbar' 
+                            placeholder="Search movies, tv shows..." 
+                            value={searchValue} 
+                            type='text' 
+                            onChange={(e)=> setSearchValue(e.target.value)}>
+                    </input>
+                </form>
+                
+                <div className='userLinks'>
+                    
+                            <div className='userButton' onClick={handleGoToProfile}>
+                                {user?.displayName}
+                            </div>
+                            <div className='userButton' onClick={handleLogout}>
+                                Log Out
+                            </div>
+                        
+                    
+                </div>
+            </div>
+        </>
     )
 }
 

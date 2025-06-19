@@ -12,6 +12,40 @@
   backdrop-filter: blur(10px);
 }
 
+/* Mobile menu button (hamburger) - hidden by default on desktop */
+.mobile-menu-button {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 20;
+}
+
+.mobile-menu-button span {
+  width: 100%;
+  height: 3px;
+  background-color: #ffcc00;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-button.open span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.mobile-menu-button.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-button.open span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
 .linkStyle {
   text-decoration: none;
 }
@@ -142,5 +176,107 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Mobile menu container */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+  }
+  
+  .mobile-menu-button {
+    display: flex;
+  }
+  
+  .mobile-menu {
+    display: flex;
+  }
+  
+  /* Hide desktop navigation elements */
+  .navbar form {
+    display: none;
+  }
+  
+  .userLinks {
+    display: none;
+  }
+  
+  /* Show these elements in the mobile menu instead */
+  .mobile-menu form {
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .mobile-menu .searchbar {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.8rem 1rem 0.8rem 2.5rem;
+  }
+  
+  .mobile-menu .userLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .mobile-menu .userButton {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .mobile-menu .userDropdown {
+    position: relative;
+    top: 0.5rem;
+    right: auto;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 480px) {
+  .navbar {
+    padding: 0.8rem;
+  }
+  
+  .mobile-menu .searchbar {
+    font-size: 0.9rem;
+    padding: 0.7rem 1rem 0.7rem 2.5rem;
+  }
+  
+  .mobile-menu .userButton {
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
   }
 }

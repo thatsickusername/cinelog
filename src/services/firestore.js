@@ -16,11 +16,9 @@ export const useFirestore = ()=>{
     const addToWatchlist = async (userId, dataId, data) =>{
         try{
             if (await checkIfInWatchList(userId, dataId)){
-                console.log("Item already in Watchlist")
                 return false
             }
             await setDoc(doc(db,"users", userId?.toString(), "watchlist", dataId?.toString()), data)
-            console.log("Document written")
         }catch(error){
             console.log(error, 'Error adding document')
         }
@@ -29,7 +27,6 @@ export const useFirestore = ()=>{
     const removeFromWatchlist = async (userId, dataId) =>{
         try{
             await deleteDoc(doc(db, "users", userId?.toString(), "watchlist", dataId?.toString()))
-            console.log("removed from watchlist")
         }catch(error){
             console.log(error, 'Error removing document')
         }
@@ -100,7 +97,6 @@ export const useFirestore = ()=>{
             const docId = getReviewDocId(movieId, userId)
 
             if (await checkIfAlreadyReviewed(movieId, userId)){
-            console.log("Movie already Reviewed")
             return false
         }
 
@@ -112,7 +108,6 @@ export const useFirestore = ()=>{
           };
 
        await setDoc(doc(db, "reviews", docId), reviewData)
-        console.log("Review added")
         return true
     }catch(error){
         console.log(error, 'Error adding Review')

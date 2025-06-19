@@ -116,7 +116,7 @@ function ProfilePage() {
                                                     <span className="review-time"> • {formatDistanceToNow(review.createdAt.seconds * 1000, {addSuffix: true})} </span>
                                                 </p>
                                                 </div>
-                                                <div className="review-rating">
+                                                <div className="review-rating mobile-rating">
                                                 {renderStars(review.review_rating)}
                                                 </div>
                                             </div>

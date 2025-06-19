@@ -53,7 +53,6 @@ function ReviewsSection({details, movieId, user}) {
             poster_path: details?.poster_path
         }
 
-        console.log(data)
         const reviewStatus = await addReviewToMovie(movieId, user?.uid, data )
         // const reviewPublished = await checkIfAlreadyReviewed(movieId, user?.uid)
         // setIsAlreadyReviewed(reviewPublished)
@@ -89,7 +88,7 @@ function ReviewsSection({details, movieId, user}) {
                             </Link>
                         
                             </div>
-                            <div className="review-rating">
+                            <div className="review-rating mobile-rating">
                                 {renderStars(review.review_rating)}
                             </div>
                         </div>
