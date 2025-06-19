@@ -1,0 +1,7 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Single circle representing a film reel or a general media icon -->
+  <circle cx="50" cy="50" r="40" fill="#ffcc00"/>
+
+  <!-- The letter "C" in the center -->
+  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="#222222">C</text>
+</svg>
