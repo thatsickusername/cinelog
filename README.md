@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/Firebase-Firestore-orange" alt="Firebase Firestore" />
 </p>
 
-<h1 align="center"> Dive into the world of cinema, curate your watchlist, and <br/> connect with a community of cinephiles.                
+<h1 align="center"> Dive into the world of cinema               
 </h1>
 
 
@@ -26,7 +26,6 @@ CineLog is a sleek, full-featured movie web app powered by [TMDb](https://www.th
 - 👤 Public user profiles with reviews & watchlist
 - 🔍 Movie search with fuzzy match
 - ⚡ Responsive, animated UI with custom CSS
-- 🔄 Real-time Firestore syncing with pagination
 - 🎭 Placeholder avatars using DiceBear
 
 ---
@@ -89,7 +88,7 @@ npm run dev
 
 ## 🔜 Future Possible Enhancements
 
-Here are a few areas you can consider expanding into:
+Here are a few areas this project can be expanded:
 
 - 🎞️ Create user-defined movie Lists (beyond Watchlist)
 - 💬 Add comments or likes on reviews
